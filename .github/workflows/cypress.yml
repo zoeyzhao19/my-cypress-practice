@@ -10,17 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:node16.13.0-chrome95-ff94
-      options: --user 1001  # ← THIS IS THE IMPORTANT LINE!
+      options: --user 1001 # ← THIS IS THE IMPORTANT LINE!
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      #- name: Save build folder
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #   name: build
-      #    if-no-files-found: error
-      #    path: build
 
       - name: Cypress install
         uses: cypress-io/github-action@v2
@@ -42,21 +35,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      #- name: Download the build folders
-      #  uses: actions/download-artifact@v2
-      #  with:
-      #    name: build
-      #    path: build
-
       - name: "UI Tests - Chrome"
         uses: cypress-io/github-action@v2
         with:
           # we have already installed all dependencies above
-          # install: false
+          install: false
           browser: chrome
           record: true
           parallel: true
-          group: 'UI - Chrome'
+          group: "UI - Chrome"
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
